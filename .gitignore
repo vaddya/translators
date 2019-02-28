@@ -1,0 +1,15 @@
+works/
+*.aux
+*.toc
+*.lof
+*.lot
+*.lol
+*.pdf
+*.out
+*.gz
+*.log
+*.dvi
+.idea
+build
+*.zip
+*cmake-build-debug
