@@ -7,4 +7,7 @@ c: $(file).c
 	gcc $(file).c -o $(file).o
 
 clean:
-	rm *.c *.o *.out
+	rm *.c *.o
+
+cleanall: clean
+	rm *.out
