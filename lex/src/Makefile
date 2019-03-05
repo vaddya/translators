@@ -8,6 +8,7 @@ c: $(file).c
 
 clean:
 	rm *.c *.o
+	git checkout yy.c
 
 cleanall: clean
 	rm *.out
