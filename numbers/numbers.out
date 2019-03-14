@@ -1,0 +1,8 @@
+-.123456E+04
++.4321E-03
++.123456E+03
++.123E+03
++.456E+00
++.123456E+03
+Error: two or more signs!
+Error: two or more dots in number!
