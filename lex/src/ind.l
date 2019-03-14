@@ -1,5 +1,6 @@
 %%
-x+[yz]+	;
+x+[(yz)(zy)]+ { ECHO; printf("\n"); }
+.|\n ;
 %%
 
 #ifndef yywrap
