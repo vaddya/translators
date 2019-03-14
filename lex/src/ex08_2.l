@@ -3,11 +3,11 @@
 
 %%
 \@[A-Za-z]+    {
-                 len = yyleng;
-                 p = (char *)strdup(yytext);
+                   len = yyleng;
+                   p = (char *) strdup(yytext);
 
-                 for( i = 1; i < len; i++ )
-                     unput( p[i] );
+                   for (i = 1; i < len; i++)
+                       unput( p[i] );
                }
 %%
 

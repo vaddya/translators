@@ -6,5 +6,5 @@ if [ -z "$1" ]; then
 	done
 else
 	if [ -z "$2" ]; then data="$1"; else data="$2"; fi
-	make file=$1 >/dev/null && ./$1.o <$data.in | tee $data.out
+	make file=$1 >/dev/null && ./$1.o <$data.in |& tee $data.out
 fi

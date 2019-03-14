@@ -9,7 +9,7 @@ magic  { switch (state) {
            case 1: printf("<first>");  break;
            case 2: printf("<second>"); break;
            case 3: printf("<third>");  break;
-           default : ECHO;
+           default: ECHO;
          }
        }
 %%

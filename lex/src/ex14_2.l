@@ -7,12 +7,11 @@ he     { h++; REJECT; }
 %%
 
 #ifndef yywrap
-int yywrap() { return( 1 ); }
+int yywrap() { return 1; }
 #endif
 
-main() 
-{ 
-    while( yylex() ); 
-    printf( "she: %d times, he: %d times\n", s, h );    
+void main() { 
+    while (yylex()); 
+    printf ("she: %d times, he: %d times\n", s, h);    
 }
 
