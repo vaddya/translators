@@ -1,0 +1,183 @@
+State 12 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: lists $end
+
+    1 lists: list
+    2      | list '\n' lists
+
+    3 list: %empty
+    4     | NUM
+    5     | sublist
+    6     | list ',' list
+
+    7 sublist: '(' ID ':' list ')'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'\n' (10) 2
+'(' (40) 7
+')' (41) 7
+',' (44) 6
+':' (58) 7
+error (256)
+NUM (258) 4
+ID (259) 7
+
+
+Nonterminals, with rules where they appear
+
+$accept (10)
+    on left: 0
+lists (11)
+    on left: 1 2, on right: 0 2
+list (12)
+    on left: 3 4 5 6, on right: 1 2 6 7
+sublist (13)
+    on left: 7, on right: 5
+
+
+State 0
+
+    0 $accept: . lists $end
+
+    NUM  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    $default  reduce using rule 3 (list)
+
+    lists    go to state 3
+    list     go to state 4
+    sublist  go to state 5
+
+
+State 1
+
+    4 list: NUM .
+
+    $default  reduce using rule 4 (list)
+
+
+State 2
+
+    7 sublist: '(' . ID ':' list ')'
+
+    ID  shift, and go to state 6
+
+
+State 3
+
+    0 $accept: lists . $end
+
+    $end  shift, and go to state 7
+
+
+State 4
+
+    1 lists: list .
+    2      | list . '\n' lists
+    6 list: list . ',' list
+
+    '\n'  shift, and go to state 8
+    ','   shift, and go to state 9
+
+    $default  reduce using rule 1 (lists)
+
+
+State 5
+
+    5 list: sublist .
+
+    $default  reduce using rule 5 (list)
+
+
+State 6
+
+    7 sublist: '(' ID . ':' list ')'
+
+    ':'  shift, and go to state 10
+
+
+State 7
+
+    0 $accept: lists $end .
+
+    $default  accept
+
+
+State 8
+
+    2 lists: list '\n' . lists
+
+    NUM  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    $default  reduce using rule 3 (list)
+
+    lists    go to state 11
+    list     go to state 4
+    sublist  go to state 5
+
+
+State 9
+
+    6 list: list ',' . list
+
+    NUM  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    $default  reduce using rule 3 (list)
+
+    list     go to state 12
+    sublist  go to state 5
+
+
+State 10
+
+    7 sublist: '(' ID ':' . list ')'
+
+    NUM  shift, and go to state 1
+    '('  shift, and go to state 2
+
+    $default  reduce using rule 3 (list)
+
+    list     go to state 13
+    sublist  go to state 5
+
+
+State 11
+
+    2 lists: list '\n' lists .
+
+    $default  reduce using rule 2 (lists)
+
+
+State 12
+
+    6 list: list . ',' list
+    6     | list ',' list .
+
+    ','  shift, and go to state 9
+
+    ','       [reduce using rule 6 (list)]
+    $default  reduce using rule 6 (list)
+
+
+State 13
+
+    6 list: list . ',' list
+    7 sublist: '(' ID ':' list . ')'
+
+    ','  shift, and go to state 9
+    ')'  shift, and go to state 14
+
+
+State 14
+
+    7 sublist: '(' ID ':' list ')' .
+
+    $default  reduce using rule 7 (sublist)

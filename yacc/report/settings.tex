@@ -55,7 +55,10 @@
 	morecomment=[l][\color{green}]{\$\$},
 	sensitive=true,
 	columns=fullflexible,
-	inputencoding=utf8/cp1251
+	inputencoding=utf8/cp1251,
+	literate=%
+		{~}{{\raise.25ex\hbox{$\mathtt{\sim}$}}}{1}%
+		{-}{-}{1}
 }
 
 \renewcommand{\le}{\ensuremath{\leqslant}}
