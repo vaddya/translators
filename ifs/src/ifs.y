@@ -14,32 +14,28 @@ int line = 1;
    char* text;
 };
 
-
 %token <ival> NUM
 %token <text> ID
-%type <ival> list
-%type <ival> sublist
-%start lists
+%token IF
+%left '+' '-' '*' '/'
+%type <ival> expr
+%start statements
 
 %%
-lists: list             ;
-     | list '\n' lists  
-{
-    printf("No. of items in line %d from from end: %d\n", line++, $1); 
-}
+statements: statement
+	  | statement statements  ;
 
-list:                { $$ = 0; }
-    | NUM            { $$ = 1; }
-    | sublist        { $$ = $1; }
-    | list ',' list  { $$ = $1 + $3; }
-  
+statement: if
+	 | assignment  ;
 
-sublist:  '(' ID ':' list ')' 
-{ 
-    $$ = $4; 
-    printf("No. of items in sublist \"%s\": %d\n", $2, $4);
-    free($2);
-}
+if: IF '(' expr ')' '{' statements '}' { printf("if: %d\n", $3); }
+
+assignment: ID '=' expr ';' { printf("\"%s\" = %d\n", $1, $3); }
+
+expr: NUM            { $$ = $1; }
+    | expr '+' expr  { $$ = $1 + $3; }
+    | expr '-' expr  { $$ = $1 - $3; }
+    | expr '*' expr  { $$ = $1 * $3; }
+    | expr '/' expr  { $$ = $1 / $3; }
 %%
-
 

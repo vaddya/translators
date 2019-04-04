@@ -8,10 +8,11 @@ A [A-Za-z_]
 L [0-9A-Za-z_]
 
 %%
+if        { return IF; }
 [0-9]+    { yylval.ival = atoi(yytext); return NUM; }
-{A}+{L}+  { yylval.text = strdup(yytext); return ID; }
-[ \t]     ;
-.|\n      { return yytext[0]; }
+{A}{L}+   { yylval.text = strdup(yytext); return ID; }
+[ \t\n]   ;
+.         { return yytext[0]; }
 %%
 
 #ifndef yywrap
