@@ -14,11 +14,9 @@ int stack[STACK_SIZE];
 int tcount = 1;
 int lcount = 1;
 char *last;
-
 %}
 
-%union
-{
+%union {
    int   ival;
    char* text;
 };
@@ -38,6 +36,16 @@ statement: if
 	 | assignment  ;
 
 if: IF '(' expr ')' start statements end  ;
+
+if: IF '(' ')'  {
+    fprintf(stderr, "Empty condition!\n");
+    exit(1);
+}
+
+if: IF '(' expr ')' statements  { 
+    fprintf(stderr, "Braces are required!\n");
+    exit(1);
+}
 
 start: '{'  { 
     push(lcount++);

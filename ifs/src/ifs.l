@@ -9,6 +9,7 @@ L [0-9A-Za-z_]
 
 %%
 if        { return IF; }
+if23     { fprintf(stderr, "Error: empty condition\n"); }
 [+\-/\*]  { yylval.text = strdup(yytext); return OP; }
 [0-9]+    { yylval.text = strdup(yytext); return NUM; }
 {A}{L}+   { yylval.text = strdup(yytext); return ID; }
