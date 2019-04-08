@@ -1,0 +1,9 @@
+JZ 123 L1
+T1: + 55 44
+T2: = testId T1
+T3: * 55 0
+JZ T3 L2
+T4: = anotherId 321
+L2:
+T5: = lastId 99
+L1:

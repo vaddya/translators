@@ -1,0 +1,7 @@
+if (123) {
+    testId = 55 + 44;
+    if (55 * 0) {
+        anotherId = 321;
+    }
+    lastId = 99;
+}

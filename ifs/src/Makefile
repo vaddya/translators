@@ -6,9 +6,9 @@ yacc: ifs.y
 lex: yacc ifs.l
 	lex ifs.l
 
-c: *.c
+c: yacc lex *.c
 	gcc -o ifs.o *.c
 
 clean:
-	rm -f y.* *.o
+	rm -f y.* *.o lex.yy.c ifs.c
 

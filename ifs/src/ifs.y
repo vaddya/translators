@@ -2,15 +2,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define STACK_SIZE 100
+
 int yylex();
 void yyerror(char *);
 void push(int);
 int pop();
 
 int size = 0;
-int stack[100];
+int stack[STACK_SIZE];
 int tcount = 1;
 int lcount = 1;
+char *last;
 
 %}
 
@@ -34,28 +37,44 @@ statements: statement
 statement: if
 	 | assignment  ;
 
-if: IF '(' expr ')' start statements end { /*printf("if: %d\n", $3)*/; }
+if: IF '(' expr ')' start statements end  ;
 
-start: '{'  { push(lcount++); printf("ZJ T%d L%d\n", tcount - 1, lcount - 1); }
+start: '{'  { 
+    push(lcount++);
+    printf("JZ %s L%d\n", last, lcount - 1);
+}
 
-end: '}'  { int i = pop(); printf("L%d:\n", i); }
+end: '}'  { 
+    int i = pop();
+    printf("L%d:\n", i);
+}
 
-assignment: ID '=' expr ';' { printf("T%d: = %s %s\n", tcount++, $1, $3); }
+assignment: ID '=' expr ';'  { 
+    printf("T%d: = %s %s\n", tcount++, $1, $3); 
+}
 
-expr: NUM           { $$ = $1; }
+expr: NUM           { $$ = last = $1; }
     | expr OP expr  {
-        char *buffer = (char *) malloc(sizeof(char) * 4);
+        char *buffer = (char *) malloc(sizeof(char) * 5);
         sprintf(buffer, "T%d", tcount++);
-        $$ = buffer;
+        $$ = last = buffer;
         printf("%s: %s %s %s\n", $$, $2, $1, $3); 
     }
 %%
 
 void push(int i) {
+    if (size >= STACK_SIZE) {
+        fprintf(stderr, "StackOverflow\n");
+        exit(1);
+    } 
     stack[size++] = i;
 }
 
 int pop() {
+    if (size <= 0) {
+        fprintf(stderr, "Stack is empty!\n");
+        exit(1);
+    }
     return stack[--size];
 }
 
