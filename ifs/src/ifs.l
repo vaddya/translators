@@ -8,9 +8,8 @@ A [A-Za-z_]
 L [0-9A-Za-z_]
 
 %%
-if        { return IF; }
-if23     { fprintf(stderr, "Error: empty condition\n"); }
-[+\-/\*]  { yylval.text = strdup(yytext); return OP; }
+if        { return IF;}
+[+\-\*/]  { yylval.text = strdup(yytext); return OP; }
 [0-9]+    { yylval.text = strdup(yytext); return NUM; }
 {A}{L}+   { yylval.text = strdup(yytext); return ID; }
 [ \t\n]   ;
@@ -18,6 +17,6 @@ if23     { fprintf(stderr, "Error: empty condition\n"); }
 %%
 
 #ifndef yywrap
-int yywrap () { return 1; }
+int yywrap() { return 1; }
 #endif
 
