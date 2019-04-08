@@ -4,8 +4,14 @@
 
 int yylex();
 void yyerror(char *);
+void push(int);
+int pop();
 
-int line = 1;
+int size = 0;
+int stack[100];
+int tcount = 1;
+int lcount = 1;
+
 %}
 
 %union
@@ -14,11 +20,11 @@ int line = 1;
    char* text;
 };
 
-%token <ival> NUM
+%token <text> NUM
 %token <text> ID
+%left <text> OP
 %token IF
-%left '+' '-' '*' '/'
-%type <ival> expr
+%type <text> expr
 %start statements
 
 %%
@@ -28,14 +34,29 @@ statements: statement
 statement: if
 	 | assignment  ;
 
-if: IF '(' expr ')' '{' statements '}' { printf("if: %d\n", $3); }
+if: IF '(' expr ')' start statements end { /*printf("if: %d\n", $3)*/; }
 
-assignment: ID '=' expr ';' { printf("\"%s\" = %d\n", $1, $3); }
+start: '{'  { push(lcount++); printf("ZJ T%d L%d\n", tcount - 1, lcount - 1); }
 
-expr: NUM            { $$ = $1; }
-    | expr '+' expr  { $$ = $1 + $3; }
-    | expr '-' expr  { $$ = $1 - $3; }
-    | expr '*' expr  { $$ = $1 * $3; }
-    | expr '/' expr  { $$ = $1 / $3; }
+end: '}'  { int i = pop(); printf("L%d:\n", i); }
+
+assignment: ID '=' expr ';' { printf("T%d: = %s %s\n", tcount++, $1, $3); }
+
+expr: NUM           { $$ = $1; }
+    | expr OP expr  {
+        char *buffer = (char *) malloc(sizeof(char) * 4);
+        sprintf(buffer, "T%d", tcount++);
+        $$ = buffer;
+        printf("%s: %s %s %s\n", $$, $2, $1, $3); 
+    }
 %%
+
+void push(int i) {
+    stack[size++] = i;
+}
+
+int pop() {
+    return stack[--size];
+}
+
 

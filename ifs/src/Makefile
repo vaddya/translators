@@ -3,7 +3,7 @@ all: clean yacc lex c
 yacc: ifs.y
 	yacc -vd ifs.y
 	
-lex: ifs.l
+lex: yacc ifs.l
 	lex ifs.l
 
 c: *.c

@@ -9,7 +9,8 @@ L [0-9A-Za-z_]
 
 %%
 if        { return IF; }
-[0-9]+    { yylval.ival = atoi(yytext); return NUM; }
+[+\-/\*]  { yylval.text = strdup(yytext); return OP; }
+[0-9]+    { yylval.text = strdup(yytext); return NUM; }
 {A}{L}+   { yylval.text = strdup(yytext); return ID; }
 [ \t\n]   ;
 .         { return yytext[0]; }
