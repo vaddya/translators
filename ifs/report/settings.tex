@@ -23,6 +23,7 @@
 \usepackage{cmap}
 \usepackage{pgfplotstable}
 \usepackage{listingsutf8}
+\usepackage{mathtext}
 
 \definecolor{green}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -79,6 +80,9 @@
 \newcommand{\inout}[1]{ 
 	\lstinputlisting[language=,caption=\code{#1.in}]{#1.in}
 	\lstinputlisting[language=,caption=\code{#1.out}]{#1.out}
+}
+\newcommand{\bfn}[1]{
+	<\textbf{#1}> \code{::=}
 }
 
 \titleformat*{\section}{\large\bfseries} 
